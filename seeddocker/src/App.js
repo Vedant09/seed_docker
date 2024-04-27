@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,18 @@ function App() {
   });
 
   const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    // Fetch user data from the API when the component mounts
+    axios
+      .get("http://127.0.0.1:3009/api/user")
+      .then((response) => {
+        setFormData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +41,18 @@ function App() {
       email: "",
       interest: "",
     });
+  };
+
+  const saveData = () => {
+    // Send a POST request to update user data
+    axios
+      .post("http://127.0.0.1:3009/api/user", formData)
+      .then((response) => {
+        console.log(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error saving user data:", error);
+      });
   };
 
   return (
@@ -86,6 +111,9 @@ function App() {
         ) : (
           <></>
         )}
+        <button type="button" onClick={saveData}>
+          Save
+        </button>
       </form>
     </div>
   );
