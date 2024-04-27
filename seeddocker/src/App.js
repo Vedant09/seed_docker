@@ -3,12 +3,12 @@ import "./App.css";
 
 function App() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    interest: "",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    interest: "React Development",
   });
 
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +20,14 @@ function App() {
 
   const toggleEditMode = () => {
     setEditMode((prevMode) => !prevMode);
+  };
+
+  const clearData = () => {
+    setFormData({
+      name: "",
+      email: "",
+      interest: "",
+    });
   };
 
   return (
@@ -69,8 +77,15 @@ function App() {
         </label>
         <br />
         <button type="button" onClick={toggleEditMode}>
-          {editMode ? "View" : "Edit"}
+          {editMode ? "Save" : "Edit"}
         </button>
+        {editMode ? (
+          <button type="button" onClick={clearData}>
+            Clear
+          </button>
+        ) : (
+          <></>
+        )}
       </form>
     </div>
   );
