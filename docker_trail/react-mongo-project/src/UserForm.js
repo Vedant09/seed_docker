@@ -19,7 +19,7 @@ const UserForm = () => {
     e.preventDefault();
     try {
       await axios.post("http://127.0.0.1:3001/api/users", formData);
-      alert("User created successfully!");
+      alert("User added successfully!");
     } catch (err) {
       console.error(err);
     }
